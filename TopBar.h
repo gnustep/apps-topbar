@@ -12,7 +12,6 @@
 
 - (NSColor *) backgroundColor;
 - (NSColor *) transparentColor;
-- (NSInteger) menuBarHeight;
 - (void) createTopBar;
 - (void) applicationWillFinishLaunching: (NSNotification *)not;
 - (void) applicationDidFinishLaunching: (NSNotification*)not;

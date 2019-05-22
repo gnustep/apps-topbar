@@ -28,6 +28,7 @@
 #import <Foundation/NSString.h>
 #import <Foundation/NSBundle.h>
 #import <Foundation/NSUserDefaults.h>
+#import "GNUstepGUI/GSTheme.h"
 
 static inline NSString *
 ShortNameOfDay(int day)
@@ -65,18 +66,25 @@ AMPMStringForHour(int hour)
   [super dealloc];
 }
 
-- (id) init
+- (id) initWithOrigin:(CGFloat)xOrigin
+		     :(CGFloat)yOrigin
 {
   if ((self = [super init]) != nil)
     {
       NSInvocation * inv;
-      NSFont * font = [NSFont systemFontOfSize: 0];
-      NSUInteger stringWidth=[font widthOfString: @"Mon XX: XX PM"];
-      NSRect screenFrame = [[NSScreen mainScreen] frame];
-      NSSize screenSize = screenFrame.size;
+      NSFont *menuFont=[NSFont menuBarFontOfSize:0];
+      NSMutableDictionary *attributes ;
+      attributes = [NSMutableDictionary new];
+      [attributes setObject:menuFont
+		     forKey:NSFontAttributeName];
+      NSMutableAttributedString *clockString = [[NSMutableAttributedString alloc] initWithString: @"Mon XX : XX PM" ];
+      [clockString setAttributes:attributes range:NSMakeRange(0,[clockString length])]; 
+      NSSize stringSize=[clockString size];
+      xOrigin = xOrigin - stringSize.width - 5;
+      yOrigin -= stringSize.height/2;
       clockButton = [[NSButton alloc] initWithFrame:
-				 NSMakeRect(screenSize.width - stringWidth -5, 3, stringWidth, 20)];
-      [clockButton setFont: font];
+					 NSMakeRect (xOrigin, yOrigin, stringSize.width,stringSize.height)];
+      [clockButton setFont: menuFont];
       [clockButton setBordered: NO];
       inv = [NSInvocation invocationWithMethodSignature: [self
         methodSignatureForSelector: @selector(updateClock)]];
@@ -126,14 +134,14 @@ AMPMStringForHour(int hour)
             }
 
           [clockButton setTitle: [NSString stringWithFormat:
-            _(@"%@ %d: %02d %@"), ShortNameOfDay(day), h, minute,
-            AMPMStringForHour(hour)]];
+		                _(@"%@ %d: %02d %@"), ShortNameOfDay(day), h, minute,
+					   AMPMStringForHour(hour)]];
         }
       else
         {
           [clockButton setTitle: [NSString stringWithFormat: _(@"%@ %d: %02d"),
-            ShortNameOfDay(day), hour, minute]];
-        }
+					   ShortNameOfDay(day), hour, minute]];
+	}
     }
 }
 

@@ -1,5 +1,6 @@
 #import "TopBar.h"
 #import "ClockView.h"
+#import "GNUstepGUI/GSTheme.h"
 
 @implementation MyDelegate : NSObject
 - (void) dealloc
@@ -19,23 +20,19 @@
   return color;
 }
 
-- (NSInteger) menuBarHeight
-{
-  return 24;
-}
- 
 -(id) init
 {
   if ((self = [super init]) != nil)
     {
        
     }
+
   return self;
 }
 
 -(void) createTopBar
 {
-  NSInteger menuBarHeight = [self menuBarHeight];
+  const CGFloat menuBarHeight = [[GSTheme theme] menuBarHeight];
   NSRect rect;
   NSSize stringSize;
   NSColor *color;
@@ -44,8 +41,9 @@
   //NSPopUpButton * logoButton;
   //NSMenu * buttonMenu;
   NSMenuItemCell * cell=nil;
-  NSTextField* label;
-  NSFont *menuFont=[NSFont boldSystemFontOfSize:0];
+  //NSTextField* label;
+  NSButton* label;
+  NSFont *menuFont=[NSFont menuBarFontOfSize:0];
   NSMutableDictionary *attributes ;
   attributes = [NSMutableDictionary new];
   [attributes setObject:menuFont
@@ -85,18 +83,19 @@
   NSMutableAttributedString *titleString = [[NSMutableAttributedString alloc] initWithString: @"GNUstep" ];
   [titleString setAttributes:attributes range:NSMakeRange(0,[titleString length])]; 
   stringSize=[titleString size];
-  label = [[NSTextField alloc] initWithFrame: NSMakeRect (screenSize.width/2-stringSize.width/2,menuBarHeight/2 - stringSize.height/2-1,0,stringSize.height)];
-  [label setSelectable: NO];
-  [label setBezeled: NO];
-  [label setDrawsBackground: NO];
-  [label setAttributedStringValue:titleString];
+  label = [[NSButton alloc] initWithFrame:
+			      NSMakeRect (screenSize.width/2-stringSize.width/2,menuBarHeight/2 - stringSize.height/2,stringSize.width,stringSize.height)];
+  [label setFont: menuFont];
+  [label setBordered: NO];
+  [label setTitle: @"GNUstep"];
   [label sizeToFit];
+  printf ("Position %lf, %lf\n", screenSize.width/2-stringSize.width/2,menuBarHeight/2 - stringSize.height/2);
 
 
-  // Creation of the clock
-  ClockView* clockView = [[ClockView alloc] init];
+  // Creation of the clock 
+  ClockView* clockView = [[ClockView alloc] initWithOrigin : screenSize.width
+							   : menuBarHeight/2];
  
-  
   //Creation of the topBar 
   rect = NSMakeRect (0, screenSize.height-menuBarHeight, screenSize.width, menuBarHeight);
   unsigned int styleMask = NSBorderlessWindowMask;

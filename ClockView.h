@@ -32,6 +32,8 @@
 
   int hour, minute, day;
 }
+- (id) initWithOrigin:(CGFloat)xOrigin
+                     :(CGFloat)yOrigin;
 
 - (NSView *) clockButton;
 
