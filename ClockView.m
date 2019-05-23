@@ -17,6 +17,7 @@
 */
 #import "TopBar.h"
 #import "ClockView.h"
+#import "CalendarView.h"
 
 #import <AppKit/NSButton.h>
 #import <AppKit/NSFont.h>
@@ -56,12 +57,45 @@ AMPMStringForHour(int hour)
  
 @implementation ClockView : NSObject
 
+- (void) buttonAction: (id) sender
+{
+  if (calendarWindow == nil) {
+    CalendarView *cView = [[CalendarView alloc] initWithFrame: NSZeroRect];
+    [cView setDate: [NSCalendarDate calendarDate]];
+    /* Try to get right position */
+    int w = [CalendarView size].width;
+    //int h = [CalendarView size].height;
+    int h = 220;
+    int y = NSMinY([[clockButton window] frame])-h;
+//    int x = NSMinX([clockButton frame]);
+    int x = NSMinX([clockButton frame]) + NSMinX([[clockButton window] frame]);
+    /* Make sure the window is inside the screen */
+    x = (x+w > NSMaxX([[clockButton window] frame])) ? NSMaxX([[clockButton window] frame])-w : x;
+    NSRect rect = NSMakeRect(x, y, w, h);
+    calendarWindow = [[NSWindow alloc] initWithContentRect: rect
+                                      styleMask: NSBorderlessWindowMask
+                                        backing: NSBackingStoreRetained
+                                          defer: NO];
+    [calendarWindow setLevel:NSTornOffMenuWindowLevel-1];
+    NSColor *color = [[GSTheme theme] menuItemBackgroundColor];
+    [calendarWindow setBackgroundColor: color];
+    [calendarWindow setContentView: cView];
+    
+    DESTROY(cView);
+  }
+  if ([calendarWindow isVisible]) {
+    [calendarWindow orderOut: self];
+  } else {
+    [calendarWindow makeKeyAndOrderFront: self];
+  }
+}
+
 
 - (void) dealloc
 {
   [timer invalidate];
   TEST_RELEASE(clockButton);
-
+  DESTROY(calendarWindow);
 
   [super dealloc];
 }
@@ -85,7 +119,10 @@ AMPMStringForHour(int hour)
       clockButton = [[NSButton alloc] initWithFrame:
 					 NSMakeRect (xOrigin, yOrigin, stringSize.width,stringSize.height)];
       [clockButton setFont: menuFont];
+      [clockButton setAlignment: NSRightTextAlignment];
       [clockButton setBordered: NO];
+      [clockButton setTarget: self];
+      [clockButton setAction: @selector(buttonAction:)];
       inv = [NSInvocation invocationWithMethodSignature: [self
         methodSignatureForSelector: @selector(updateClock)]];
       [inv setTarget: self];

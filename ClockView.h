@@ -28,7 +28,8 @@
 @interface ClockView : NSObject
 {
   NSTimer *timer;
-  NSButton * clockButton;
+  NSButton *clockButton;
+  NSWindow *calendarWindow;
 
   int hour, minute, day;
 }

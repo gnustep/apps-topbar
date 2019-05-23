@@ -88,8 +88,7 @@
   [label setFont: menuFont];
   [label setBordered: NO];
   [label setTitle: @"GNUstep"];
-  [label sizeToFit];
-  printf ("Position %lf, %lf\n", screenSize.width/2-stringSize.width/2,menuBarHeight/2 - stringSize.height/2);
+  //printf ("Position %lf, %lf\n", screenSize.width/2-stringSize.width/2,menuBarHeight/2 - stringSize.height/2);
 
 
   // Creation of the clock 
@@ -98,10 +97,9 @@
  
   //Creation of the topBar 
   rect = NSMakeRect (0, screenSize.height-menuBarHeight, screenSize.width, menuBarHeight);
-  unsigned int styleMask = NSBorderlessWindowMask;
-  topBar = [NSWindow alloc];
-  topBar = [topBar initWithContentRect: rect
-				  styleMask: styleMask
+  //unsigned int styleMask = NSBorderlessWindowMask;
+  topBar = [[NSWindow alloc] initWithContentRect: rect
+				  styleMask: NSBorderlessWindowMask
 				    backing: NSBackingStoreBuffered
 				      defer:NO];
   [topBar setTitle: @"TopBar"];

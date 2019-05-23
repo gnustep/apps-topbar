@@ -32,6 +32,7 @@ Resources/French
 TopBar_OBJC_FILES =\
 		TopBar.m\
 		ClockView.m\
+		CalendarView.m\
 		main.m\
 
 
