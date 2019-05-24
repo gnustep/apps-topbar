@@ -1,7 +1,8 @@
-#include <Foundation/Foundation.h>
-#include <AppKit/AppKit.h>
+#import <Foundation/Foundation.h>
+#import <AppKit/AppKit.h>
 
-#define RIGHTPADDING 10
+#define RIGHTPADDING 6
+#define LEFTPADDING 6
 
 @interface MyDelegate : NSObject
 {

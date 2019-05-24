@@ -73,9 +73,9 @@ AMPMStringForHour(int hour)
     x = (x+w > NSMaxX([[clockButton window] frame])) ? NSMaxX([[clockButton window] frame])-w : x;
     NSRect rect = NSMakeRect(x, y, w, h);
     calendarWindow = [[NSWindow alloc] initWithContentRect: rect
-                                      styleMask: NSBorderlessWindowMask
-                                        backing: NSBackingStoreRetained
-                                          defer: NO];
+						 styleMask: NSBorderlessWindowMask
+						   backing: NSBackingStoreRetained
+						     defer: NO];
     [calendarWindow setLevel:NSTornOffMenuWindowLevel-1];
     NSColor *color = [[GSTheme theme] menuItemBackgroundColor];
     [calendarWindow setBackgroundColor: color];
@@ -100,8 +100,8 @@ AMPMStringForHour(int hour)
   [super dealloc];
 }
 
-- (id) initWithOrigin:(CGFloat)xOrigin
-		     :(CGFloat)yOrigin
+- (id) initWithOrigin : (CGFloat)xOrigin
+	       height : (CGFloat)h
 {
   if ((self = [super init]) != nil)
     {
@@ -115,9 +115,9 @@ AMPMStringForHour(int hour)
       [clockString setAttributes:attributes range:NSMakeRange(0,[clockString length])]; 
       NSSize stringSize=[clockString size];
       xOrigin = xOrigin - stringSize.width - 5;
-      yOrigin -= stringSize.height/2;
+      h = h/2 - stringSize.height/2;
       clockButton = [[NSButton alloc] initWithFrame:
-					 NSMakeRect (xOrigin, yOrigin, stringSize.width,stringSize.height)];
+					 NSMakeRect (xOrigin,h ,stringSize.width, stringSize.height)];
       [clockButton setFont: menuFont];
       [clockButton setAlignment: NSRightTextAlignment];
       [clockButton setBordered: NO];
@@ -132,6 +132,7 @@ AMPMStringForHour(int hour)
                                            invocation: inv
                                               repeats: YES];
       [self updateClock];
+      [clockString release];
     }
 
   return self;
@@ -171,12 +172,12 @@ AMPMStringForHour(int hour)
             }
 
           [clockButton setTitle: [NSString stringWithFormat:
-		                _(@"%@ %d: %02d %@"), ShortNameOfDay(day), h, minute,
+		                _(@"%@  %d : %02d %@"), ShortNameOfDay(day), h, minute,
 					   AMPMStringForHour(hour)]];
         }
       else
         {
-          [clockButton setTitle: [NSString stringWithFormat: _(@"%@ %d: %02d"),
+          [clockButton setTitle: [NSString stringWithFormat: _(@"%@  %d : %02d"),
 					   ShortNameOfDay(day), hour, minute]];
 	}
     }

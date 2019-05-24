@@ -1,10 +1,10 @@
 /*
-    ClockMenulet.h
 
     Interface declaration of the ClockMenulet class for the
     EtoileMenuServer application.
 
     Copyright (C) 2005, 2006  Saso Kiselkov
+    Modified in 2019 by Bertrand Dekoninck and included in TopBar. 
 
     This program is free software; you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -34,7 +34,7 @@
   int hour, minute, day;
 }
 - (id) initWithOrigin:(CGFloat)xOrigin
-                     :(CGFloat)yOrigin;
+               height:(CGFloat)y;
 
 - (NSView *) clockButton;
 

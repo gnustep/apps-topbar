@@ -1,5 +1,6 @@
 #import "TopBar.h"
 #import "ClockView.h"
+#import "UserView.h"
 #import "GNUstepGUI/GSTheme.h"
 
 @implementation MyDelegate : NSObject
@@ -11,7 +12,7 @@
 
 - (NSColor *) backgroundColor
 {
-  NSColor *color = [NSColor colorWithCalibratedRed: 0.992 green: 0.992 blue: 0.992 alpha: 0.9];
+  NSColor *color = [[GSTheme theme] menuItemBackgroundColor];
   return color;
 }
 - (NSColor *) transparentColor
@@ -88,16 +89,17 @@
   [label setFont: menuFont];
   [label setBordered: NO];
   [label setTitle: @"GNUstep"];
-  //printf ("Position %lf, %lf\n", screenSize.width/2-stringSize.width/2,menuBarHeight/2 - stringSize.height/2);
-
-
-  // Creation of the clock 
-  ClockView* clockView = [[ClockView alloc] initWithOrigin : screenSize.width
-							   : menuBarHeight/2];
  
+  //Creation of the UserView
+  UserView* userView = [[UserView alloc] initWithOrigin: screenSize.width - RIGHTPADDING
+						 height: menuBarHeight];
+
+ // Creation of the clock 
+  ClockView* clockView = [[ClockView alloc] initWithOrigin: screenSize.width - 2*RIGHTPADDING - [userView width]
+						    height: menuBarHeight];
+  
   //Creation of the topBar 
   rect = NSMakeRect (0, screenSize.height-menuBarHeight, screenSize.width, menuBarHeight);
-  //unsigned int styleMask = NSBorderlessWindowMask;
   topBar = [[NSWindow alloc] initWithContentRect: rect
 				  styleMask: NSBorderlessWindowMask
 				    backing: NSBackingStoreBuffered
@@ -110,16 +112,20 @@
   [topBar setCanHide:NO];
   [topBar setHidesOnDeactivate:NO];
 
+  
+
 
   // Add subviews
   //  [[topBar contentView] addSubview: logoButton];
   [[topBar contentView] addSubview: label];
+  [[topBar contentView] addSubview: [userView userButton]];
   [[topBar contentView] addSubview: [clockView clockButton]];
   // [logoButton release];
   // [logo release];
   [label release];
   [titleString release];
   [clockView release];
+  [userView release];
   [cell release];
 }
 

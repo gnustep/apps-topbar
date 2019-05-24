@@ -33,7 +33,9 @@ TopBar_OBJC_FILES =\
 		TopBar.m\
 		ClockView.m\
 		CalendarView.m\
+		UserView.m\
 		main.m\
 
 
 include $(GNUSTEP_MAKEFILES)/application.make
+

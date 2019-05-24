@@ -1,4 +1,5 @@
 #import "CalendarView.h"
+#import "GNUstepGUI/GSTheme.h"
 
 @implementation CalendarView
 
@@ -84,7 +85,8 @@ static short numberOfDaysInMonth[] = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30
    yearLabel = [[NSTextField alloc] initWithFrame: NSMakeRect(85, 170, 60, 20)];
    [yearLabel setStringValue: @"This Year"];
    [yearLabel setBezeled: NO];
-   [yearLabel setBackgroundColor: [NSColor windowBackgroundColor]];
+   //[yearLabel setBackgroundColor: [NSColor windowBackgroundColor]];
+   [yearLabel setBackgroundColor: [[GSTheme theme] menuItemBackgroundColor]];
    [yearLabel setEditable: NO];
    [yearLabel setSelectable: NO];
    [yearLabel setAlignment: NSCenterTextAlignment];
@@ -151,7 +153,7 @@ static short numberOfDaysInMonth[] = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30
    dayMatrix = [[NSMatrix alloc] initWithFrame: NSMakeRect(10, 10, 210, 100)
                                           mode: NSRadioModeMatrix
                                      prototype: dayCell
-                                  numberOfRows: 5
+                                  numberOfRows: 6
                                numberOfColumns: 7];
 
    for (j = 0; j < 7; j++)
