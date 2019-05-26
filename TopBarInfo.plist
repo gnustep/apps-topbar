@@ -1,0 +1,14 @@
+{
+    ApplicationDescription = "Persistent bar at the top the screen";
+    ApplicationName = TopBar;
+    ApplicationRelease = "0.1";
+    Authors = (
+	"Bertrand Dekoninck"
+    );
+    CFBundleIdentifier = "org.anares.TopBar";
+    Copyright = "Copyright (C) 2019";
+    CopyrightDescription = "Released under GPL";
+    FullVersionID = "0.1";
+    NSExecutable = TopBar;
+    NSRole = Application;
+}

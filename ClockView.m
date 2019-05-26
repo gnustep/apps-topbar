@@ -111,7 +111,7 @@ AMPMStringForHour(int hour)
       attributes = [NSMutableDictionary new];
       [attributes setObject:menuFont
 		     forKey:NSFontAttributeName];
-      NSMutableAttributedString *clockString = [[NSMutableAttributedString alloc] initWithString: @"Mon XX : XX PM" ];
+      NSMutableAttributedString *clockString = [[NSMutableAttributedString alloc] initWithString: @"mon. XX:XX PM" ];
       [clockString setAttributes:attributes range:NSMakeRange(0,[clockString length])]; 
       NSSize stringSize=[clockString size];
       xOrigin = xOrigin - stringSize.width - 5;
@@ -172,13 +172,13 @@ AMPMStringForHour(int hour)
             }
 
           [clockButton setTitle: [NSString stringWithFormat:
-		                _(@"%@  %d : %02d %@"), ShortNameOfDay(day), h, minute,
+		                _(@"%@.  %d:%02d %@"), [ShortNameOfDay(day) lowercaseString], h, minute,
 					   AMPMStringForHour(hour)]];
         }
       else
         {
-          [clockButton setTitle: [NSString stringWithFormat: _(@"%@  %d : %02d"),
-					   ShortNameOfDay(day), hour, minute]];
+          [clockButton setTitle: [NSString stringWithFormat: _(@"%@.  %d:%02d"),
+					   [ShortNameOfDay(day) lowercaseString], hour, minute]];
 	}
     }
 }

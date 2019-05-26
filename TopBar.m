@@ -95,7 +95,7 @@
 						 height: menuBarHeight];
 
  // Creation of the clock 
-  ClockView* clockView = [[ClockView alloc] initWithOrigin: screenSize.width - 2*RIGHTPADDING - [userView width]
+  ClockView* clockView = [[ClockView alloc] initWithOrigin: screenSize.width - PADDING - RIGHTPADDING - [userView width]
 						    height: menuBarHeight];
   
   //Creation of the topBar 

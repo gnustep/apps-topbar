@@ -29,6 +29,7 @@ static short numberOfDaysInMonth[] = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30
    [yearLabel setStringValue: [date descriptionWithCalendarFormat: @"%Y"]];
 
    currentMonth = [date monthOfYear];
+   
    [monthMatrix selectCellWithTag: currentMonth-1];
 
    currentYear = [date yearOfCommonEra];
@@ -85,7 +86,6 @@ static short numberOfDaysInMonth[] = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30
    yearLabel = [[NSTextField alloc] initWithFrame: NSMakeRect(85, 170, 60, 20)];
    [yearLabel setStringValue: @"This Year"];
    [yearLabel setBezeled: NO];
-   //[yearLabel setBackgroundColor: [NSColor windowBackgroundColor]];
    [yearLabel setBackgroundColor: [[GSTheme theme] menuItemBackgroundColor]];
    [yearLabel setEditable: NO];
    [yearLabel setSelectable: NO];
@@ -122,7 +122,7 @@ static short numberOfDaysInMonth[] = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30
 				 _(@"Jul"), _(@"Aug"), _(@"Sep"), _(@"Oct"), _(@"Nov"), _(@"Dec"), nil];
 
    monthCell = [[NSButtonCell alloc] initTextCell: @""];
-   [monthCell setBordered: NO];
+   [monthCell setBordered:NO];
    [monthCell setShowsStateBy: NSOnOffButton];
    [monthCell setAlignment: NSCenterTextAlignment];
 
@@ -193,34 +193,37 @@ static short numberOfDaysInMonth[] = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30
 
 - (void) updateDate: (id) sender
 {
-  NSLog(@"updateDate");
-   int i=0, j=0, k=0;
-   NSCalendarDate *newDate;
-
-   if (sender == lastYearButton)
-   {
+    int i=0, j=0, k=0;
+  NSCalendarDate *newDate;
+  
+  if (sender == lastYearButton)
+    {
       i = -1;
-   }
-   else if (sender == nextYearButton)
-   {
+    }
+  else if (sender == nextYearButton)
+    {
       i = 1;
-   }
-   else if (sender == monthMatrix)
-   {
+    }
+  else if (sender == monthMatrix)
+    {
       j = [[[sender selectedCells] lastObject] tag] + 1 - [date monthOfYear];
-   }
-   else if (sender == dayMatrix)
-   {
+      NSLog(@"Mois : %i",j);
+    }
+  else if (sender == dayMatrix)
+    {
       k = [[[[sender selectedCells] lastObject] stringValue] intValue] - [date dayOfMonth];
-   }
-
-   newDate = [date addYear: i
-                     month: j
-                       day: k
-                      hour: 0
-                    minute: 0
-                    second: 0];
-   [self setDate: newDate];
+      /* NSLog(@" Day : %i", [date dayOfMonth]);
+      NSLog(@"intValue : %i", [[[sender selectedCells] lastObject] intValue]);
+      NSLog(@"Jour : %i", k);*/ //FIXME : wrong intValue
+    }
+  
+  newDate = [date addYear: i
+		    month: j
+		      day: k
+		     hour: 0
+		   minute: 0
+		   second: 0];
+  [self setDate: newDate];
 }
 
 - (void) dealloc
