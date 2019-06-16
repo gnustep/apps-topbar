@@ -125,7 +125,7 @@
   [titleString release];
   [clockView release];
   [userView release];
-  //[cell release];
+  [cell release];
 }
 
 
