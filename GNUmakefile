@@ -17,6 +17,7 @@ TopBar_APPLICATION_ICON = Resources/Separator.tiff
 #
 TopBar_RESOURCE_FILES = \
 Resources/Separator.tiff\
+Resources/Logo.tiff\
 Resources/English.lproj \
 Resources/French.lproj
 

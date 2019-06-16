@@ -32,12 +32,13 @@
 #import "GNUstepGUI/GSTheme.h"
 
 static inline NSString *
-ShortNameOfDay(int day)
+ShortNameOfDay(int dayOfWeek)
 {
   return [[[NSUserDefaults standardUserDefaults]
     objectForKey: NSShortWeekDayNameArray]
-    objectAtIndex: day];
+    objectAtIndex: dayOfWeek];
 }
+
 
 static inline NSString *
 AMPMStringForHour(int hour)
@@ -111,7 +112,7 @@ AMPMStringForHour(int hour)
       attributes = [NSMutableDictionary new];
       [attributes setObject:menuFont
 		     forKey:NSFontAttributeName];
-      NSMutableAttributedString *clockString = [[NSMutableAttributedString alloc] initWithString: @"mon. XX:XX PM" ];
+      NSMutableAttributedString *clockString = [[NSMutableAttributedString alloc] initWithString: @"mon. XX XX:XX PM" ];
       [clockString setAttributes:attributes range:NSMakeRange(0,[clockString length])]; 
       NSSize stringSize=[clockString size];
       xOrigin = xOrigin - stringSize.width - 5;
@@ -121,6 +122,8 @@ AMPMStringForHour(int hour)
       [clockButton setFont: menuFont];
       [clockButton setAlignment: NSRightTextAlignment];
       [clockButton setBordered: NO];
+      [clockButton setButtonType:NSMomentaryPushInButton];
+      //[clockButton setBezelType: NSShadowlessSquareBezelStyle];
       [clockButton setTarget: self];
       [clockButton setAction: @selector(buttonAction:)];
       inv = [NSInvocation invocationWithMethodSignature: [self
@@ -141,22 +144,24 @@ AMPMStringForHour(int hour)
 - (void) updateClock
 {
   NSCalendarDate * date;
-  int newHour, newMinute, newDay;
+  int newHour, newMinute, newDayOfWeek, newDayOfMonth;
 
   date = [NSCalendarDate calendarDate];
 
   // only redraw every minute
   newHour = [date hourOfDay];
   newMinute = [date minuteOfHour];
-  newDay = [date dayOfWeek];
-  if (hour != newHour || minute != newMinute || day != newDay)
+  newDayOfWeek = [date dayOfWeek];
+  newDayOfMonth = [date dayOfMonth];
+ 
+  if (hour != newHour || minute != newMinute || dayOfWeek != newDayOfWeek)
     {
       BOOL useAmPmTime = [[NSUserDefaults standardUserDefaults]
         boolForKey: @"UseAMPMTimeIndication"];
 
       hour = newHour;
       minute = newMinute;
-      day = newDay;
+      dayOfWeek = newDayOfWeek;
 
       if (useAmPmTime)
         {
@@ -169,16 +174,15 @@ AMPMStringForHour(int hour)
           else if (h > 12)
             {
               h -= 12;
-            }
-
+            }	  
           [clockButton setTitle: [NSString stringWithFormat:
-		                _(@"%@.  %d:%02d %@"), [ShortNameOfDay(day) lowercaseString], h, minute,
+					      _(@"%@. %i %d:%02d %@"), [ShortNameOfDay(dayOfWeek) lowercaseString], newDayOfMonth, h, minute,
 					   AMPMStringForHour(hour)]];
         }
       else
         {
-          [clockButton setTitle: [NSString stringWithFormat: _(@"%@.  %d:%02d"),
-					   [ShortNameOfDay(day) lowercaseString], hour, minute]];
+          [clockButton setTitle: [NSString stringWithFormat: _(@"%@. %i %d:%02d"),
+					   [ShortNameOfDay(dayOfWeek) lowercaseString], newDayOfMonth, hour, minute]];
 	}
     }
 }

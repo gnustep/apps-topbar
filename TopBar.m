@@ -38,12 +38,11 @@
   NSSize stringSize;
   NSColor *color;
   //NSSize logoSize;
-  //NSImage* logo=nil;
-  //NSPopUpButton * logoButton;
-  //NSMenu * buttonMenu;
-  NSMenuItemCell * cell=nil;
-  //NSTextField* label;
-  NSButton* label;
+  //NSImage *logo=nil;
+  //NSPopUpButton *logoButton;
+  //NSMenu *buttonMenu;
+  //NSMenuItemCell * cell=nil;
+  NSButton *label;
   NSFont *menuFont=[NSFont menuBarFontOfSize:0];
   NSMutableDictionary *attributes ;
   attributes = [NSMutableDictionary new];
@@ -51,13 +50,13 @@
 		 forKey:NSFontAttributeName];
   screenFrame = [[NSScreen mainScreen] frame];
   screenSize = screenFrame.size;
-  
+  color = [self backgroundColor];
   /*
    // Creation of the popup menu
-
   logo = [[NSImage alloc] initWithContentsOfFile: [[NSBundle mainBundle] pathForResource:@"Logo.tiff" ofType:nil] ];
+   
   logoSize = logo.size;
-  logoButton= [[NSPopUpButton alloc] initWithFrame:NSMakeRect(screenSize.width -6-3*logoSize.width,0,3*logoSize.width,menuBarHeight)];
+  logoButton= [[NSPopUpButton alloc] initWithFrame:NSMakeRect(11,0,logoSize.width+10,menuBarHeight)];
   [logoButton setBezelStyle: NSRegularSquareBezelStyle];
   [logoButton setTitle: @""];
   [logoButton setImage: logo];
@@ -65,16 +64,15 @@
   [logoButton setBordered: NO];//FixMe : this doesn't work with my popup button.
   buttonMenu =  [logoButton menu];
   NSMenuItem *menuItem = [logoButton itemAtIndex: 0];
- 
   [menuItem setImage: logo];
 
-  //cell = [[NSMenuItemCell alloc] init]; 
-  //[cell setMenuItem: menuItem];
-  //[cell setImagePosition: NSImageLeft];  // FixMe : it seems that popup buttons can't use this to put the image at the left of the title.
+  cell = [[NSMenuItemCell alloc] init]; 
+  [cell setMenuItem: menuItem];
+  [cell setImagePosition: NSImageLeft];  // FixMe : it seems that popup buttons can't use this to put the image at the left of the title.
 
   [buttonMenu addItemWithTitle:_(@"Launch xterm")
-			action: @selector (launchXterm:)
-		 keyEquivalent: @""];
+  			action: @selector (launchXterm:)
+  		 keyEquivalent: @""];
   [buttonMenu addItemWithTitle:_(@"Quit")
 			action: @selector (terminate:)
 		 keyEquivalent: @"q  "];
@@ -91,11 +89,13 @@
   [label setTitle: @"GNUstep"];
  
   //Creation of the UserView
-  UserView* userView = [[UserView alloc] initWithOrigin: screenSize.width - RIGHTPADDING
+  UserView *userView = [[UserView alloc] initWithOrigin: screenSize.width - RIGHTPADDING
 						 height: menuBarHeight];
+  NSMutableArray *users = [userView users];
+  NSLog(@"Users : %@", users);
 
  // Creation of the clock 
-  ClockView* clockView = [[ClockView alloc] initWithOrigin: screenSize.width - PADDING - RIGHTPADDING - [userView width]
+  ClockView *clockView = [[ClockView alloc] initWithOrigin: screenSize.width - PADDING - RIGHTPADDING - [userView width]
 						    height: menuBarHeight];
   
   //Creation of the topBar 
@@ -105,7 +105,6 @@
 				    backing: NSBackingStoreBuffered
 				      defer:NO];
   [topBar setTitle: @"TopBar"];
-  color = [self backgroundColor];
   [topBar setBackgroundColor:color];
   [topBar setAlphaValue: 1.0];
   [topBar setLevel:NSTornOffMenuWindowLevel-1];
@@ -116,17 +115,17 @@
 
 
   // Add subviews
-  //  [[topBar contentView] addSubview: logoButton];
+  // [[topBar contentView] addSubview: logoButton];
   [[topBar contentView] addSubview: label];
   [[topBar contentView] addSubview: [userView userButton]];
   [[topBar contentView] addSubview: [clockView clockButton]];
-  // [logoButton release];
-  // [logo release];
+  //[logoButton release];
+  //[logo release];
   [label release];
   [titleString release];
   [clockView release];
   [userView release];
-  [cell release];
+  //[cell release];
 }
 
 

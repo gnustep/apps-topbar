@@ -122,11 +122,11 @@ static short numberOfDaysInMonth[] = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30
 				 _(@"Jul"), _(@"Aug"), _(@"Sep"), _(@"Oct"), _(@"Nov"), _(@"Dec"), nil];
 
    monthCell = [[NSButtonCell alloc] initTextCell: @""];
-   [monthCell setBordered:NO];
+   [monthCell setBordered: NO];
    [monthCell setShowsStateBy: NSOnOffButton];
    [monthCell setAlignment: NSCenterTextAlignment];
 
-   monthMatrix = [[NSMatrix alloc] initWithFrame: NSMakeRect(10, 120, 210, 40)
+   monthMatrix = [[NSMatrix alloc] initWithFrame: NSMakeRect(10, 130, 220, 40)
                                             mode: NSRadioModeMatrix
                                        prototype: monthCell
                                     numberOfRows: 2
@@ -150,10 +150,10 @@ static short numberOfDaysInMonth[] = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30
    [dayCell setShowsStateBy: NSOnOffButton];
    [dayCell setAlignment: NSCenterTextAlignment];
 
-   dayMatrix = [[NSMatrix alloc] initWithFrame: NSMakeRect(10, 10, 210, 100)
+   dayMatrix = [[NSMatrix alloc] initWithFrame: NSMakeRect(10, 10, 210, 110)
                                           mode: NSRadioModeMatrix
                                      prototype: dayCell
-                                  numberOfRows: 6
+                                  numberOfRows: 7
                                numberOfColumns: 7];
 
    for (j = 0; j < 7; j++)

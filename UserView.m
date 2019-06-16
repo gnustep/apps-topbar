@@ -55,6 +55,32 @@
    return self;
 }
 
+-(NSMutableArray *) users
+{
+  NSString *passwdContent = [NSString stringWithContentsOfFile: @"/etc/passwd"
+						      encoding: NSUTF8StringEncoding
+							 error: NULL];
+  NSArray *array = [passwdContent componentsSeparatedByString:@"\n"];
+  NSMutableArray *users = [[NSMutableArray alloc] init];
+  NSEnumerator *enumerator = [array objectEnumerator];
+  NSString *aUser;
+  NSMutableArray *components;
+  int uid = 0;
+  
+  while ((aUser = [enumerator nextObject]))
+  {
+    components = [aUser componentsSeparatedByString:@":"];
+    if ([components count] > 2)
+      uid = [[components objectAtIndex:2] intValue];
+    if (uid > 999 && uid < 30000)
+    {
+      [users addObject :[components objectAtIndex: 0]];
+    }
+  }
+  
+  return users;
+  [users release];
+}
 -(void) dealloc
 {
 

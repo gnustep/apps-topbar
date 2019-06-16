@@ -31,7 +31,7 @@
   NSButton *clockButton;
   NSWindow *calendarWindow;
 
-  int hour, minute, day;
+  int hour, minute, dayOfWeek, dayOfMonth;
 }
 - (id) initWithOrigin:(CGFloat)xOrigin
                height:(CGFloat)y;

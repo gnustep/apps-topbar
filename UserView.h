@@ -11,4 +11,5 @@
 -(CGFloat) width;
 -(id) initWithOrigin:(CGFloat)xOrigin
                height:(CGFloat)h;
+-(NSMutableArray *) users;
 @end
